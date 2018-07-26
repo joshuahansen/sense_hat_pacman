@@ -3,6 +3,7 @@ from sense_hat import SenseHat
 class Agent():
     
     def __init__(self, board, colour, position):
+        self.board = board
         self.position = position
         self.colour = colour
         self.sense = SenseHat()       
@@ -20,4 +21,5 @@ class Agent():
         return False
     
     def get_move(self):
+        return None
         

@@ -26,15 +26,16 @@ class Board():
         
         return walls
 
-    def get_walls(self)
+    def get_walls(self):
         return self.walls
 
     def set_food(self):
         food = set()
         for i in range(5):
-            pos = (random.randint(0,8), random.randint(0,8))
+            pos = (random.randint(0,7), random.randint(0,7))
             if pos not in self.walls:
                 food.add(pos)
+        print(food)
         return food
     
     def get_food(self):
