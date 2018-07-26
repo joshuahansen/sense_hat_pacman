@@ -42,7 +42,11 @@ class Board():
         return self.food
 
     def has_food(self):
-        len(self.food) > 0 ? return True : return False
+        print(len(self.food))
+        if len(self.food) > 0:
+            return True
+        else:
+            return False
     
     def display_walls(self):
         wall_colour = (255, 255, 255)

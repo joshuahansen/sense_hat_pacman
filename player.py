@@ -1,6 +1,15 @@
 from agent import Agent
 import time
+class Direction():
+    UP = 'up'
+    DOWN = 'down'
+    LEFT = 'left'
+    RIGHT = 'right'
+    MIDDLE = 'middle'
+    PRESSED = 'pressed'
+    RELEASED = 'released'
 
+    
 class Player(Agent):
 
     def __init__(self, board, colour, position):
@@ -20,43 +29,39 @@ class Player(Agent):
 
     def get_move(self):
         for event in self.sense.stick.get_events():
-            if event.direction == 'middle' and event.action == 'pressed':
+            if event.direction == Direction.MIDDLE and event.action == Direction.PRESSED:
                 break
-            elif event.direction == 'up' and event.action == 'pressed':
+            elif event.direction == Direction.UP and event.action == Direction.PRESSED:
                 self.remove_pos()
                 pos = self.get_position_as_list()
                 new_pos = (pos[0], pos[1]-1)
 
                 if self.valid_move(self.get_position(), new_pos):
                     self.position = new_pos
-                self.sense.set_pixel(self.get_position()[0], self.get_position()[1], self.colour)
                 break
-            elif event.direction == 'down' and event.action == 'pressed':
+            elif event.direction == Direction.DOWN and event.action == Direction.PRESSED:
                 self.remove_pos()
                 pos = self.get_position_as_list()
                 new_pos = (pos[0], pos[1]+1)
 
                 if self.valid_move(self.get_position(), new_pos):
                     self.position = new_pos
-                self.sense.set_pixel(self.get_position()[0], self.get_position()[1], self.colour)
                 break
-            elif event.direction == 'right' and event.action == 'pressed':
+            elif event.direction == Direction.RIGHT and event.action == Direction.PRESSED:
                 self.remove_pos()
                 pos = self.get_position_as_list()
                 new_pos = (pos[0]+1, pos[1])
 
                 if self.valid_move(self.get_position(), new_pos):
                     self.position = new_pos
-                self.sense.set_pixel(self.get_position()[0], self.get_position()[1], self.colour)
                 break
-            elif event.direction == 'left' and event.action == 'pressed':
+            elif event.direction == Direction.LEFT and event.action == Direction.PRESSED:
                 self.remove_pos()
                 pos = self.get_position_as_list()
                 new_pos = (pos[0]-1, pos[1])
 
                 if self.valid_move(self.get_position(), new_pos):
                     self.position = new_pos
-                self.sense.set_pixel(self.get_position()[0], self.get_position()[1], self.colour)
                 break
 
     def display_player(self):

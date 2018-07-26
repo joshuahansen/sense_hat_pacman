@@ -11,14 +11,16 @@ class Game():
 
     def display_score(self):
         sense = SenseHat()
+        selse.clear()
         sense.show_message('Score: {self.player.score}') 
 
-    def play():
+    def play(self):
         self.board.display_board()
         self.player.display_player()
 
         while self.board.has_food():
-            self.player.get_move
+            self.player.get_move()
+            self.player.display_player()
         
         self.display_score()
     
