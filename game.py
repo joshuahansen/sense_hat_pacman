@@ -1,8 +1,7 @@
 from sense_hat import SenseHat
-import time
-import random
 from board import Board
 from player import Player
+
 
 class Game():
     def __init__(self):
@@ -11,8 +10,10 @@ class Game():
 
     def display_score(self):
         sense = SenseHat()
-        selse.clear()
-        sense.show_message('Score: {self.player.score}') 
+        sense.low_light = True
+        sense.clear()
+        sense.show_message('Score: ')
+        sense.show_letter(str(self.player.score))
 
     def play(self):
         self.board.display_board()
@@ -21,9 +22,9 @@ class Game():
         while self.board.has_food():
             self.player.get_move()
             self.player.display_player()
-        
+
         self.display_score()
-    
+
     def reset(self):
         self.board.clear_display()
 

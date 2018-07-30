@@ -1,5 +1,7 @@
 from agent import Agent
 import time
+
+
 class Direction():
     UP = 'up'
     DOWN = 'down'
@@ -9,16 +11,20 @@ class Direction():
     PRESSED = 'pressed'
     RELEASED = 'released'
 
-    
+
 class Player(Agent):
 
     def __init__(self, board, colour, position):
         super().__init__(board, colour, position)
+        self.score = 0
 
     def valid_move(self, pos, new_pos):
         move_error = (255, 0, 0)
+        if new_pos in self.board.food:
+            self.board.food.remove(new_pos)
+            self.score += 1
         if new_pos in self.board.walls:
-            #Flash error colour
+            # Flash error colour
             self.sense.set_pixel(pos[0], pos[1], move_error)
             time.sleep(0.1)
             self.sense.set_pixel(pos[0], pos[1], (0, 0, 0))
@@ -29,9 +35,11 @@ class Player(Agent):
 
     def get_move(self):
         for event in self.sense.stick.get_events():
-            if event.direction == Direction.MIDDLE and event.action == Direction.PRESSED:
-                break
-            elif event.direction == Direction.UP and event.action == Direction.PRESSED:
+            # if event.direction == Direction.MIDDLE and
+            # event.action == Direction.PRESSED:
+            #    break
+            if (event.direction == Direction.UP
+                    and event.action == Direction.PRESSED):
                 self.remove_pos()
                 pos = self.get_position_as_list()
                 new_pos = (pos[0], pos[1]-1)
@@ -39,7 +47,8 @@ class Player(Agent):
                 if self.valid_move(self.get_position(), new_pos):
                     self.position = new_pos
                 break
-            elif event.direction == Direction.DOWN and event.action == Direction.PRESSED:
+            elif (event.direction == Direction.DOWN
+                    and event.action == Direction.PRESSED):
                 self.remove_pos()
                 pos = self.get_position_as_list()
                 new_pos = (pos[0], pos[1]+1)
@@ -47,7 +56,8 @@ class Player(Agent):
                 if self.valid_move(self.get_position(), new_pos):
                     self.position = new_pos
                 break
-            elif event.direction == Direction.RIGHT and event.action == Direction.PRESSED:
+            elif (event.direction == Direction.RIGHT
+                    and event.action == Direction.PRESSED):
                 self.remove_pos()
                 pos = self.get_position_as_list()
                 new_pos = (pos[0]+1, pos[1])
@@ -55,7 +65,8 @@ class Player(Agent):
                 if self.valid_move(self.get_position(), new_pos):
                     self.position = new_pos
                 break
-            elif event.direction == Direction.LEFT and event.action == Direction.PRESSED:
+            elif (event.direction == Direction.LEFT
+                    and event.action == Direction.PRESSED):
                 self.remove_pos()
                 pos = self.get_position_as_list()
                 new_pos = (pos[0]-1, pos[1])
@@ -65,4 +76,8 @@ class Player(Agent):
                 break
 
     def display_player(self):
-        self.sense.set_pixel(self.get_position()[0], self.get_position()[1], self.colour)
+        self.sense.set_pixel(
+                self.get_position()[0],
+                self.get_position()[1],
+                self.colour
+        )

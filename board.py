@@ -1,29 +1,29 @@
 from sense_hat import SenseHat
-import time
 import random
+
 
 class Board():
     def __init__(self):
         self.sense = SenseHat()
         self.walls = self.set_walls()
         self.food = self.set_food()
-        self.player = (1,1) #change to player class once created
-    
+        self.player = (1, 1)  # change to player class once created
+
     def set_walls(self):
         walls = set()
-        ##set boarder walls
+        # set boarder walls
         for x in range(8):
-            walls.add((0,x))
-            walls.add((7,x))
+            walls.add((0, x))
+            walls.add((7, x))
             walls.add((x, 0))
             walls.add((x, 7))
 
-        #add obstical
-        walls.add((3,3))
-        walls.add((4,3))
-        walls.add((4,4))
-        walls.add((4,5))
-        
+        # add obstical
+        walls.add((3, 3))
+        walls.add((4, 3))
+        walls.add((4, 4))
+        walls.add((4, 5))
+
         return walls
 
     def get_walls(self):
@@ -32,22 +32,20 @@ class Board():
     def set_food(self):
         food = set()
         for i in range(5):
-            pos = (random.randint(0,7), random.randint(0,7))
+            pos = (random.randint(0, 7), random.randint(0, 7))
             if pos not in self.walls:
                 food.add(pos)
-        print(food)
         return food
-    
+
     def get_food(self):
         return self.food
 
     def has_food(self):
-        print(len(self.food))
         if len(self.food) > 0:
             return True
         else:
             return False
-    
+
     def display_walls(self):
         wall_colour = (255, 255, 255)
         for pos in self.walls:
@@ -64,4 +62,3 @@ class Board():
     def display_board(self):
         self.display_walls()
         self.display_food()
-
